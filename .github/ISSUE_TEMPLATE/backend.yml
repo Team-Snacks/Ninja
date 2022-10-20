@@ -1,0 +1,11 @@
+name: 백엔드
+description: 백엔드 개발 관련 이슈를 작성합니다.
+labels: [백엔드]
+
+body:
+  - type: textarea
+    id: what-to-do
+    attributes:
+      label: 해야할 일
+      description: 이슈를 해결하기 위해 해야할 일을 적어주세요.
+      placeholder: 라이브러리 설치하기
