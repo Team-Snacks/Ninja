@@ -1,2 +1,2 @@
 # Ninja
-닌자-스낵
+Snacks Ninja project repo
