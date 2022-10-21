@@ -1,32 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import GridLayout from 'react-grid-layout'
+import '/node_modules/react-grid-layout/css/styles.css'
+import '/node_modules/react-resizable/css/styles.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const layout = [
+    { i: 'a', x: 0, y: 0, w: 1, h: 1 },
+    { i: 'b', x: 1, y: 0, w: 2, h: 1 },
+    { i: 'c', x: 0, y: 1, w: 1, h: 2 },
+    { i: 'd', x: 1, y: 1, w: 2, h: 2 },
+  ]
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className='App'>
+      <div>메뉴바</div>
+      <GridLayout
+        className='layout'
+        layout={layout}
+        rowHeight={(window.innerHeight * 0.9) / 3}
+        width={window.innerWidth * 0.99}
+        cols={5}
+        resizeHandles={['se']}
+        style={{ border: 'solid black 1px' }}
+      >
+        <div key='a' style={{ border: 'solid black 1px' }}>
+          요소1
+        </div>
+        <div key='b' style={{ border: 'solid black 1px' }}>
+          요소2
+        </div>
+        <div key='c' style={{ border: 'solid black 1px' }}>
+          요소3
+        </div>
+        <div key='d' style={{ border: 'solid black 1px' }}>
+          요소4
+        </div>
+      </GridLayout>
     </div>
   )
 }
