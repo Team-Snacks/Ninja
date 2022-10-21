@@ -1,6 +1,6 @@
 import GridLayout from 'react-grid-layout'
-import '/node_modules/react-grid-layout/css/styles.css'
-import '/node_modules/react-resizable/css/styles.css'
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
 
 function App() {
   const layout = [
