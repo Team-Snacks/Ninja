@@ -1,15 +1,10 @@
-import { useState } from 'react'
+import { useAtom } from 'jotai'
 import GridLayout, { ItemCallback, Layout } from 'react-grid-layout'
+import { layoutAtom } from './atom'
 
 export const WidgetGrid = () => {
   const maxRow = 3
-  const dummy = [
-    { i: 'a', x: 0, y: 0, w: 1, h: 1 },
-    { i: 'b', x: 1, y: 0, w: 2, h: 1 },
-    { i: 'c', x: 0, y: 1, w: 1, h: 1 },
-    { i: 'd', x: 1, y: 1, w: 1, h: 1 },
-  ]
-  const [currentLayout, setCurrentLayout] = useState<Layout[]>(dummy)
+  const [currentLayout, setCurrentLayout] = useAtom(layoutAtom)
 
   const saveCurrentLayout: ItemCallback = layout => {
     setCurrentLayout(layout)
