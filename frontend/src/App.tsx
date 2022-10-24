@@ -20,16 +20,16 @@ export const App = () => {
   return (
     <BrowserRouter>
       <AppShell
-        padding="md"
+        padding='md'
         navbar={
-          <Navbar width={{ base: 300 }} height={500} p="xs">
+          <Navbar width={{ base: 300 }} height={500} p='xs'>
             <Link to={paths.home}>홈</Link>
             <Link to={paths.register}>회원가입</Link>
             <Link to={paths.login}>로그인</Link>
           </Navbar>
         }
         header={
-          <Header height={60} p="xs">
+          <Header height={60} p='xs'>
             <Title>🍪 Snacks (Ninja)</Title>
           </Header>
         }
