@@ -1,64 +1,41 @@
-import { useState } from 'react'
-import GridLayout, { ItemCallback, Layout } from 'react-grid-layout'
-import '/node_modules/react-grid-layout/css/styles.css'
-import '/node_modules/react-resizable/css/styles.css'
+import { AppShell, Navbar, Header, Grid, NavLink, Title } from '@mantine/core'
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import { Register, Login } from './Login'
+import { paths } from './paths'
+import { WidgetGrid } from './WidgetGrid'
 
-function App() {
-  const maxRow = 3
-  const dummy = [
-    { i: 'a', x: 0, y: 0, w: 1, h: 1 },
-    { i: 'b', x: 1, y: 0, w: 2, h: 1 },
-    { i: 'c', x: 0, y: 1, w: 1, h: 1 },
-    { i: 'd', x: 1, y: 1, w: 1, h: 1 },
-  ]
-  const [currentLayout, setCurrentLayout] = useState<Layout[]>(dummy)
-
-  const saveCurrentLayout: ItemCallback = (layout) => {
-    setCurrentLayout(layout)
-  }
-
-  const checkChangedLayout: ItemCallback = (layout) => {
-    layout.forEach((ele, index) => {
-      if (ele.y + ele.h > maxRow) {
-        console.log('변경')
-      }
-    })
-  }
-
+export const Router = () => {
   return (
-    <div className='App'>
-      <div>메뉴바</div>
-      <GridLayout
-        className='layout'
-        layout={currentLayout}
-        rowHeight={(window.innerHeight * 0.9) / 3}
-        width={window.innerWidth * 0.99}
-        cols={5}
-        resizeHandles={['se']}
-        style={{ border: 'solid black 1px' }}
-        compactType={null}
-        autoSize={true}
-        maxRows={maxRow}
-        onResizeStart={saveCurrentLayout}
-        onResizeStop={checkChangedLayout}
-        onDragStart={saveCurrentLayout}
-        onDragStop={checkChangedLayout}
-      >
-        <div key='a' style={{ border: 'solid black 1px' }}>
-          요소1
-        </div>
-        <div key='b' style={{ border: 'solid black 1px' }}>
-          요소2
-        </div>
-        <div key='c' style={{ border: 'solid black 1px' }}>
-          요소3
-        </div>
-        <div key='d' style={{ border: 'solid black 1px' }}>
-          요소4
-        </div>
-      </GridLayout>
-    </div>
+    <Routes>
+      <Route path={paths.home} element={<WidgetGrid />} />
+      <Route path={paths.register} element={<Register />} />
+      <Route path={paths.login} element={<Login />} />
+    </Routes>
   )
 }
 
-export default App
+export const App = () => {
+  return (
+    <BrowserRouter>
+      <AppShell
+        padding='md'
+        navbar={
+          <Navbar width={{ base: 300 }} height={500} p='xs'>
+            <Link to={paths.home}>홈</Link>
+            <Link to={paths.register}>회원가입</Link>
+            <Link to={paths.login}>로그인</Link>
+          </Navbar>
+        }
+        header={
+          <Header height={60} p='xs'>
+            <Title>🍪 Snacks (Ninja)</Title>
+          </Header>
+        }
+      >
+        <Router />
+      </AppShell>
+    </BrowserRouter>
+  )
+}
