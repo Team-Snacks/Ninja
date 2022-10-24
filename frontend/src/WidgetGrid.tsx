@@ -4,10 +4,10 @@ import { layoutAtom } from './atom'
 
 export const WidgetGrid = () => {
   const maxRow = 3
-  const [currentLayout, setCurrentLayout] = useAtom(layoutAtom)
+  const [layout, setLayout] = useAtom(layoutAtom)
 
   const saveCurrentLayout: ItemCallback = layout => {
-    setCurrentLayout(layout)
+    setLayout(layout)
   }
 
   const checkChangedLayout: ItemCallback = layout => {
@@ -20,7 +20,7 @@ export const WidgetGrid = () => {
   return (
     <GridLayout
       className='layout'
-      layout={currentLayout}
+      layout={layout}
       rowHeight={(window.innerHeight * 0.9) / 3}
       width={window.innerWidth * 0.99}
       cols={5}
@@ -34,18 +34,11 @@ export const WidgetGrid = () => {
       onDragStart={saveCurrentLayout}
       onDragStop={checkChangedLayout}
     >
-      <div key='a' style={{ border: 'solid black 1px' }}>
-        요소1
-      </div>
-      <div key='b' style={{ border: 'solid black 1px' }}>
-        요소2
-      </div>
-      <div key='c' style={{ border: 'solid black 1px' }}>
-        요소3
-      </div>
-      <div key='d' style={{ border: 'solid black 1px' }}>
-        요소4
-      </div>
+      {layout.map(elem => (
+        <div key={elem.i} style={{ border: 'solid black 1px' }}>
+          {elem.i}
+        </div>
+      ))}
     </GridLayout>
   )
 }
