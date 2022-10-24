@@ -11,11 +11,11 @@ export const WidgetGrid = () => {
   ]
   const [currentLayout, setCurrentLayout] = useState<Layout[]>(dummy)
 
-  const saveCurrentLayout: ItemCallback = (layout) => {
+  const saveCurrentLayout: ItemCallback = layout => {
     setCurrentLayout(layout)
   }
 
-  const checkChangedLayout: ItemCallback = (layout) => {
+  const checkChangedLayout: ItemCallback = layout => {
     layout.forEach((ele, index) => {
       if (ele.y + ele.h > maxRow) {
         console.log('변경')
