@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly ENDPOINT: string
+  readonly VITE_ENDPOINT: string
 }
