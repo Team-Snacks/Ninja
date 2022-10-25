@@ -3,10 +3,10 @@ package com.example.demo.entity;
 import javax.persistence.*;
 
 @Entity
-public class UserEntity {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -14,7 +14,7 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

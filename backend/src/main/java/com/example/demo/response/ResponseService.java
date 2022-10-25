@@ -1,5 +1,6 @@
 package com.example.demo.response;
 
+import com.example.demo.dto.UserWidgetDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,11 +26,10 @@ public class ResponseService {
     }
 
     //반환할 데이터가 여러개 일 때
-    public<T> ListResponse<T> getListResponse(List<T> datalist) {
-        ListResponse listResponse = new ListResponse();
+    public<T> ListResponse<T> getListResponse(T datalist) {
+        ListResponse<T> listResponse = new ListResponse();
         listResponse.dataList = datalist;
         setSuccessResponse(listResponse);
-
         return (listResponse);
     }
 
