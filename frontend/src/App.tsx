@@ -5,7 +5,7 @@ import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import { fromDTO, Layout, layoutAtom, LayoutDTO, toDTO } from './atom'
-import { Register, Login } from './Login'
+import { Login, Register } from './Login'
 import { paths } from './paths'
 import { WidgetGrid } from './WidgetGrid'
 

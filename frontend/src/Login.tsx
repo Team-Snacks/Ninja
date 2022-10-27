@@ -1,23 +1,47 @@
-import { Button, Stack, Text, TextInput, Title } from '@mantine/core'
+import { Button, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core'
 import axios from 'axios'
+import { useAtom, useAtomValue } from 'jotai'
 import { Link } from 'react-router-dom'
+import { loginAtom } from './atom'
 import { paths } from './paths'
 
+export const LoginInput = () => {
+  const [login, setLogin] = useAtom(loginAtom)
+
+  return (
+    <>
+      <TextInput
+        placeholder='example@gmail.com'
+        label='이메일'
+        withAsterisk
+        value={login.email}
+        onChange={e => setLogin({ ...login, email: e.currentTarget.value })}
+      />
+      <PasswordInput
+        placeholder='****'
+        label='비밀번호'
+        withAsterisk
+        value={login.password}
+        onChange={e => setLogin({ ...login, password: e.currentTarget.value })}
+      />
+    </>
+  )
+}
+
 export const Login = () => {
+  const login = useAtomValue(loginAtom)
+
   return (
     <Stack>
       <Title>로그인</Title>
-      <TextInput placeholder='example@gmail.com' label='이메일' withAsterisk />
-      <TextInput placeholder='****' label='비밀번호' withAsterisk />
+      <LoginInput />
       <Button
         onClick={async () => {
+          console.log(login)
           try {
             const { data } = await axios.post(
               `${import.meta.env.VITE_ENDPOINT}/user/login`,
-              {
-                email: 'test@gmail.com',
-                password: '1234',
-              }
+              login
             )
             alert(JSON.stringify(data))
           } catch (e) {
@@ -35,20 +59,19 @@ export const Login = () => {
 }
 
 export const Register = () => {
+  const login = useAtomValue(loginAtom)
+
   return (
     <Stack>
       <Title>회원가입</Title>
-      <TextInput placeholder='example@gmail.com' label='이메일' withAsterisk />
-      <TextInput placeholder='****' label='비밀번호' withAsterisk />
+      <LoginInput />
       <Button
         onClick={async () => {
+          console.log(login)
           try {
             const { data } = await axios.post(
               `${import.meta.env.VITE_ENDPOINT}/user`,
-              {
-                email: 'test@gmail.com',
-                password: '1234',
-              }
+              login
             )
             alert(JSON.stringify(data))
           } catch (e) {
