@@ -15,6 +15,6 @@ public interface WidgetRepository extends JpaRepository<Widget, Long> {
     @Query(value = "SELECT * FROM WIDGET WHERE NAME = ?1", nativeQuery = true)
     Widget findByName(String name);
 
-    @Query(value = "SELECT * FROM WIDGET WHERE ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM WIDGET WHERE WIDGET_ID = ?1", nativeQuery = true)
     Widget findByWidgetId(Long id);
 }

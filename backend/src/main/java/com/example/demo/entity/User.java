@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 public class User {
     @Id
+    @Column(name = "user_Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

@@ -4,6 +4,7 @@ import com.example.demo.dto.UserDto;
 import com.example.demo.dto.UserWidgetDto;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserWidget;
+import com.example.demo.entity.UserWidgetId;
 import com.example.demo.entity.Widget;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.UserWidgetRepository;
@@ -71,9 +72,8 @@ public class DemoService {
             Widget findExistWidget = widgetRepository.findByName(userWidgetDto.getName());
             if (findExistWidget == null)
                 System.out.println(responseService.errorResponse(400, "widget not found").log);
-            UserWidget userWidget = new UserWidget();
-            userWidget.setUserId(findExistUser.getId());
-            userWidget.setWidgetId(findExistWidget.getId());
+            UserWidgetId userWidgetId= new UserWidgetId(findExistUser.getId(), findExistWidget.getId());
+            UserWidget userWidget = new UserWidget(userWidgetId);
             userWidget.setX(userWidgetDto.getX());
             userWidget.setY(userWidgetDto.getY());
             userWidget.setW(userWidgetDto.getW());

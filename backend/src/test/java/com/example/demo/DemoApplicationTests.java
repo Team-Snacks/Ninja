@@ -12,88 +12,96 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class DemoApplicationTests {
 
-	@Autowired
-	private DemoService demoService;
-	@Autowired
-	private WidgetRepository widgetRepository;
-	@Test
-	void 로그인테스트() {
-		//given
-		UserDto userDto = new UserDto();
-		userDto.setEmail("krkr@gmail.com");
-		userDto.setPassword("1234");
+    @Autowired
+    private DemoService demoService;
+    @Autowired
+    private WidgetRepository widgetRepository;
 
-		//when
-		System.out.println(demoService.login(userDto).log);
+    @Test
+    void 로그인테스트() {
+        //given
+        UserDto userDto = new UserDto();
+        userDto.setEmail("krkr@gmail.com");
+        userDto.setPassword("1234");
 
-		//than
-	}
+        //when
+        System.out.println(demoService.login(userDto).log);
 
-	@Test
-	void 회원가입테스트(String email){
-		//given
-		UserDto userDto = new UserDto();
-		userDto.setEmail(email);
-		userDto.setPassword("1234");
+        //than
+    }
 
-		//when
+    @Test
+    void 회원가입테스트(String email) {
+        //given
+        UserDto userDto = new UserDto();
+        userDto.setEmail(email);
+        userDto.setPassword("1234");
 
-		System.out.println(demoService.signup(userDto).log);
-		//than
-		로그인테스트();
-	}
+        //when
 
-	@Test
-	void 위젯추가테스트(String widgetName){
-		//given
-		Widget widget = new Widget();
+        System.out.println(demoService.signup(userDto).log);
+        //than
+        로그인테스트();
+    }
+
+    @Test
+    void 위젯추가테스트(String widgetName) {
+        //given
+        Widget widget = new Widget();
         widget.setName(widgetName);
         Widget widget1 = widgetRepository.save(widget);
-		if (widget1 == null)
-			System.out.println("null");
-		else
-			System.out.println("Widget Add OK");
-		//when
+        if (widget1 == null)
+            System.out.println("null");
+        else
+            System.out.println("Widget Add OK");
+        //when
 
-		//than
-	}
+        //than
+    }
 
-	@Test
-	void 유저위젯패치테스트(){
-		회원가입테스트("krkr@gmail.com");
-		위젯추가테스트("widget1");
-		위젯추가테스트("widget2");
-		//given
-		UserWidgetDto[] userWidgetDtos = new UserWidgetDto[2];
-		UserWidgetDto userWidgetDto = new UserWidgetDto();
-		userWidgetDto.setName("widget1");
-		userWidgetDto.setX(1);
-		userWidgetDto.setY(2);
-		userWidgetDto.setW(3);
-		userWidgetDto.setH(4);
-		userWidgetDtos[0] = userWidgetDto;
+    UserWidgetDto 유저위젯정보생성(String name, int x, int y, int w, int h) {
+        UserWidgetDto userWidgetDto = new UserWidgetDto();
+        userWidgetDto.setName(name);
+        userWidgetDto.setX(x);
+        userWidgetDto.setY(y);
+        userWidgetDto.setW(w);
+        userWidgetDto.setH(h);
+        return userWidgetDto;
+    }
 
-		UserWidgetDto userWidgetDto2 = new UserWidgetDto();
-		userWidgetDto2.setName("widget2");
-		userWidgetDto2.setX(5);
-		userWidgetDto2.setY(6);
-		userWidgetDto2.setW(7);
-		userWidgetDto2.setH(8);
-		userWidgetDtos[1] = userWidgetDto2;
+    @Test
+    void 유저위젯패치테스트() {
+        회원가입테스트("krkr@gmail.com");
+        위젯추가테스트("widget1");
+        위젯추가테스트("widget2");
+        위젯추가테스트("widget3");
+        //given
+        UserWidgetDto[] userWidgetDtos = new UserWidgetDto[3];
+        userWidgetDtos[0] = 유저위젯정보생성("widget1", 1, 1, 1, 1);
+        userWidgetDtos[1] = 유저위젯정보생성("widget2", 2, 2, 2, 2);
+        userWidgetDtos[2] = 유저위젯정보생성("widget3", 3, 3, 3, 3);
 
-		demoService.patchUserWidget("krkr@gmail.com", userWidgetDtos);
-		//when
 
-		//than
-	}
+        demoService.patchUserWidget("krkr@gmail.com", userWidgetDtos);
 
-	@Test
-	void 유저위젯받아오기테스트(){
-		유저위젯패치테스트();
+        userWidgetDtos[0] = 유저위젯정보생성("widget1", 999, 1, 1, 1);
+        userWidgetDtos[1] = 유저위젯정보생성("widget2", 2, 2, 2, 2);
+        userWidgetDtos[2] = 유저위젯정보생성("widget3", 3, 3, 3, 3);
 
-		UserWidgetDto[] userWidgetDtos = demoService.getUserWidget("krkr@gmail.com");
-		for (UserWidgetDto x: userWidgetDtos) {
-			System.out.println(x.getName());
-		}
-	}
+        demoService.patchUserWidget("krkr@gmail.com", userWidgetDtos);
+        //when
+
+        //than
+    }
+
+    @Test
+    void 유저위젯받아오기테스트() {
+        유저위젯패치테스트();
+
+        UserWidgetDto[] userWidgetDtos = demoService.getUserWidget("krkr@gmail.com").dataList;
+        for (UserWidgetDto x: userWidgetDtos) {
+            System.out.println(x.getName() + " " + x.getX());
+        }
+
+    }
 }
