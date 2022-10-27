@@ -6,6 +6,7 @@ import javax.persistence.*;
 public class Widget {
 
     @Id
+    @Column(name = "widget_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

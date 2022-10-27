@@ -5,15 +5,9 @@ import java.io.Serializable;
 
 @Entity
 public class UserWidget implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @JoinColumn(name = "user_id")
-    private Long userId;
-
-    @JoinColumn(name = "widget_id")
-    private Long widgetId;
+    @EmbeddedId
+    UserWidgetId userWidgetId;
 
     @Column(name = "x", nullable = false)
     private int x;
@@ -27,22 +21,19 @@ public class UserWidget implements Serializable {
     @Column(name = "h", nullable = false)
     private int h;
 
-    public Long getUserId() {
-        return userId;
+    public UserWidget(){};
+
+    public UserWidget(UserWidgetId userWidgetId){
+        this.userWidgetId = userWidgetId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public Long getUserId(){
+        return userWidgetId.getUserId();
     }
 
-    public Long getWidgetId() {
-        return widgetId;
+    public Long getWidgetId(){
+        return userWidgetId.getWidgetId();
     }
-
-    public void setWidgetId(Long widgetId) {
-        this.widgetId = widgetId;
-    }
-
     public int getX() {
         return x;
     }
