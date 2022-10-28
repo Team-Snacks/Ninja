@@ -70,16 +70,18 @@ public class DemoService {
             System.out.println(responseService.errorResponse(400, "User not found").log);
 
         for (UserWidgetDto userWidgetDto : userWidgetDtos) {
+            if (userWidgetDto.getName() == null)
+                return responseService.errorResponse(400, "widget name null");
+
             Widget findExistWidget = widgetRepository.findByName(userWidgetDto.getName());
 
             if (findExistWidget == null) {
                 Widget widget = new Widget();
-                if (userWidgetDto.getName() == null)
-                    return responseService.errorResponse(400, "widget name null");
                 widget.setName(userWidgetDto.getName());
                 widgetRepository.save(widget);
+
+                findExistWidget = widgetRepository.findByName(userWidgetDto.getName());
             }
-            findExistWidget = widgetRepository.findByName(userWidgetDto.getName());
 
             UserWidgetId userWidgetId= new UserWidgetId(findExistUser.getId(), findExistWidget.getId());
             UserWidget userWidget = new UserWidget(userWidgetId);
