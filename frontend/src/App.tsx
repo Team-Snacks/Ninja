@@ -40,7 +40,7 @@ export const Home = () => {
             try {
               const { data } = await axios.patch(
                 `${import.meta.env.VITE_ENDPOINT}/user/${email}/widgets`,
-                { widget }
+                widget
               )
               alert(JSON.stringify(data))
             } catch (e) {
@@ -53,11 +53,12 @@ export const Home = () => {
         <Button
           onClick={async () => {
             try {
-              const { data } = await axios.get<{ data: LayoutDTO }>(
+              const { data } = await axios.get<{ dataList: LayoutDTO }>(
                 `${import.meta.env.VITE_ENDPOINT}/user/${email}/widgets`
               )
-              console.log(`불러오기: ${JSON.stringify(data.data)}`)
-              setlayout(fromDTO(data.data))
+              console.log(data)
+              console.log(`불러오기: ${JSON.stringify(data.dataList)}`)
+              setlayout(fromDTO(data.dataList))
             } catch (e) {
               console.log(e)
             }
