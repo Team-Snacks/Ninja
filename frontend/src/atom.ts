@@ -1,11 +1,15 @@
 import { atom } from 'jotai'
+import { atomWithStorage } from 'jotai/utils'
 
 export interface Login {
   email: string
   password: string
 }
 
-export const loginAtom = atom<Login>({ email: '', password: '' })
+export const loginAtom = atomWithStorage<Login>('loginData', {
+  email: '',
+  password: '',
+})
 
 export interface LayoutItem {
   i: string
