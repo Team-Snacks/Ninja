@@ -8,8 +8,6 @@ interface Widget {
   name: string
 }
 
-const dummyMarketList: Widget[] = [{ name: 'widget123' }, { name: 'widget456' }]
-
 function Market() {
   //마켓 목록 get
   const [marketList, setMarketList] = useState<Widget[]>([])
@@ -20,7 +18,6 @@ function Market() {
     } catch (e) {
       console.log(e)
     }
-    setMarketList(dummyMarketList)
   }
   useEffect(() => {
     getWidgets()
