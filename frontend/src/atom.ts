@@ -13,6 +13,8 @@ export interface LayoutItem {
   y: number
   w: number
   h: number
+  moved?: boolean
+  static?: boolean
 }
 export type Layout = LayoutItem[]
 export interface LayoutItemDTO {
@@ -25,7 +27,8 @@ export interface LayoutItemDTO {
 export type LayoutDTO = LayoutItemDTO[]
 
 export const fromDTO = (dto: LayoutDTO) => dto.map(w => ({ ...w, i: w.name }))
-export const toDTO = (layout: Layout) => layout.map(w => ({ ...w, name: w.i }))
+export const toDTO = (layout: Layout) =>
+  layout.map(w => ({ name: w.i, x: w.x, y: w.y, w: w.w, h: w.h }))
 
 export const layoutAtom = atom<Layout>([
   { i: 'widget1', x: 0, y: 0, w: 1, h: 1 },
