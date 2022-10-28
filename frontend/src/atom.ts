@@ -1,5 +1,12 @@
 import { atom } from 'jotai'
 
+export interface Login {
+  email: string
+  password: string
+}
+
+export const loginAtom = atom<Login>({ email: '', password: '' })
+
 export interface LayoutItem {
   i: string
   x: number
