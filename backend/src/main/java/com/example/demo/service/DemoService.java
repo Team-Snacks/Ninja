@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserDto;
 import com.example.demo.dto.UserWidgetDto;
+import com.example.demo.dto.WidgetDto;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserWidget;
 import com.example.demo.entity.UserWidgetId;
@@ -112,37 +113,16 @@ public class DemoService {
         return responseService.getListResponse(widgetDtos);
     }
 
-/*
-    public List<UserWidgetDto> getUserWidget(String email) {
-        List<UserWidgetDto> list = new ArrayList<>();
-        User findExistUser = userRepository.findByName(email);
-        if (findExistUser == null) {
-            return null;
-        }
-        //System.out.println(responseService.errorResponse(400, "User not found").log);
 
-        UserWidget[] userWidgetEntities = userWidgetRepository.findWidgets(findExistUser.getId());
-        if (userWidgetEntities == null)
-            return null;
-            //System.out.println(responseService.errorResponse(400, "User widget not found").log);
-        Vector<UserWidgetDto> vec = new Vector<>();
-        for (UserWidget entity : userWidgetEntities) {
-            UserWidgetDto userWidgetDto = new UserWidgetDto();
-            Widget widgetEntity = widgetRepository.findByWidgetId(entity.getWidgetId());
-            if (widgetEntity == null)
-                return null;
-            userWidgetDto.setName(widgetEntity.getName());
-            userWidgetDto.setX(entity.getX());
-            userWidgetDto.setY(entity.getY());
-            userWidgetDto.setW(entity.getW());
-            userWidgetDto.setH(entity.getH());
-            vec.add(userWidgetDto);
+    public CommonResponse postWidget(WidgetDto[] widgetDtos) {
+        for (WidgetDto widgetDto1 : widgetDtos) {
+            Widget widget = new Widget();
+            if (widgetDto1.getName() == null)
+                return responseService.errorResponse(400, "null");
+            widget.setName(widgetDto1.getName());
+            widgetRepository.save(widget);
         }
-        UserWidgetDto[] widgetDtos = new UserWidgetDto[vec.size()];
-        for (int i = 0; i < vec.size(); i++) {
-            widgetDtos[i] = vec.get(i);
-            list.add(widgetDtos[i]);
-        }
-        return list;
-    } */
+        return responseService.getCommonResponse();
+    }
+
 }

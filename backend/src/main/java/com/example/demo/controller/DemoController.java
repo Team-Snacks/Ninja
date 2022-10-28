@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.UserWidgetDto;
+import com.example.demo.dto.WidgetDto;
+import com.example.demo.entity.Widget;
 import com.example.demo.response.CommonResponse;
 import com.example.demo.response.ListResponse;
 import com.example.demo.response.ResponseService;
@@ -54,9 +56,12 @@ public class DemoController {
     @PatchMapping("/{email}/widgets")
     public CommonResponse patchUserWidget(@PathVariable() String email, @RequestBody() UserWidgetDto[] userWidgetDtos) {
 
-      //if (check == false)
-       //   return (responseService.errorResponse(400, "email이 유효하지 않습니다"));
-
         return (demoService.patchUserWidget(email, userWidgetDtos));
+    }
+
+    //POST 위젯 정보
+    @PostMapping("/widgets")
+    public CommonResponse PostWidget(@RequestBody() WidgetDto[] widgetDtos) {
+        return (demoService.postWidget(widgetDtos));
     }
 }
