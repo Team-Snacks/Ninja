@@ -38,5 +38,4 @@ export const layoutAtom = atom<Layout>([
   { i: 'widget1', x: 0, y: 0, w: 1, h: 1 },
   { i: 'widget2', x: 1, y: 0, w: 2, h: 1 },
   { i: 'widget3', x: 0, y: 1, w: 1, h: 1 },
-  { i: 'widget4', x: 1, y: 1, w: 1, h: 1 },
 ])
