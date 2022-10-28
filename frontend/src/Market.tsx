@@ -30,9 +30,10 @@ function Market() {
   const widgetRegist = async () => {
     const postWidget: Widget = { name: widgetName }
     try {
-      const data = await axios.post(`${import.meta.env.VITE_ENDPOINT}/market`, {
-        postWidget,
-      })
+      const data = await axios.post(
+        `${import.meta.env.VITE_ENDPOINT}/market`,
+        postWidget
+      )
       console.log(data)
     } catch (e) {
       console.log(e)
