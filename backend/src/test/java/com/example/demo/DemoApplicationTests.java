@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.dto.UserDto;
 import com.example.demo.dto.UserWidgetDto;
+import com.example.demo.dto.WidgetDto;
 import com.example.demo.entity.Widget;
 import com.example.demo.repository.WidgetRepository;
 import com.example.demo.service.DemoService;
@@ -103,5 +104,20 @@ class DemoApplicationTests {
             System.out.println(x.getName() + " " + x.getX());
         }
 
+    }
+
+    @Test
+    void 위젯생성테스트() {
+        WidgetDto[] wigetTest = new WidgetDto[3];
+        wigetTest[0] = 위젯정보생성("test1");
+        wigetTest[1] = 위젯정보생성("test2");
+        wigetTest[2] = 위젯정보생성("test3");
+        demoService.postWidget(wigetTest);
+    }
+
+    WidgetDto 위젯정보생성(String name) {
+        WidgetDto widgetDto = new WidgetDto();
+        widgetDto.setName(name);
+        return widgetDto;
     }
 }

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserDto;
 import com.example.demo.dto.UserWidgetDto;
+import com.example.demo.dto.WidgetDto;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserWidget;
 import com.example.demo.entity.UserWidgetId;
@@ -110,6 +111,18 @@ public class DemoService {
             widgetDtos[i] = vec.get(i);
         }
         return responseService.getListResponse(widgetDtos);
+    }
+
+
+    public CommonResponse postWidget(WidgetDto[] widgetDtos) {
+        for (WidgetDto widgetDto1 : widgetDtos) {
+            Widget widget = new Widget();
+            if (widgetDto1.getName() == null)
+                return responseService.errorResponse(400, "null");
+            widget.setName(widgetDto1.getName());
+            widgetRepository.save(widget);
+        }
+        return responseService.getCommonResponse();
     }
 
 /*
