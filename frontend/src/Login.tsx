@@ -1,4 +1,11 @@
-import { Button, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core'
+import {
+  Button,
+  PasswordInput,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core'
 import axios from 'axios'
 import { useAtom, useAtomValue } from 'jotai'
 import { Link } from 'react-router-dom'
@@ -70,7 +77,7 @@ export const Register = () => {
           console.log(login)
           try {
             const { data } = await axios.post(
-              `${import.meta.env.VITE_ENDPOINT}/user`,
+              `${import.meta.env.VITE_ENDPOINT}/user/signup`,
               login
             )
             alert(JSON.stringify(data))

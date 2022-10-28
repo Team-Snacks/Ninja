@@ -1,10 +1,17 @@
 import { AppShell, Navbar, Header, Title, Button, Group } from '@mantine/core'
 import axios from 'axios'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import { fromDTO, Layout, layoutAtom, LayoutDTO, toDTO } from './atom'
+import {
+  fromDTO,
+  Layout,
+  layoutAtom,
+  LayoutDTO,
+  loginAtom,
+  toDTO,
+} from './atom'
 import { Login, Register } from './Login'
 import { paths } from './paths'
 import { WidgetGrid } from './WidgetGrid'
@@ -21,16 +28,19 @@ export const Router = () => {
 
 export const Home = () => {
   const [layout, setlayout] = useAtom(layoutAtom)
+  const { email } = useAtomValue(loginAtom)
 
   return (
     <>
       <Group>
         <Button
           onClick={async () => {
+            const widget = toDTO(layout)
+            console.log(JSON.stringify(widget))
             try {
               const { data } = await axios.patch(
-                `${import.meta.env.VITE_ENDPOINT}/user/test@gmail.com/widget`,
-                { widget: toDTO(layout) }
+                `${import.meta.env.VITE_ENDPOINT}/user/${email}/widgets`,
+                widget
               )
               alert(JSON.stringify(data))
             } catch (e) {
@@ -43,11 +53,12 @@ export const Home = () => {
         <Button
           onClick={async () => {
             try {
-              const { data } = await axios.get<{ data: LayoutDTO }>(
-                `${import.meta.env.VITE_ENDPOINT}/user/test@gmail.com/widget`
+              const { data } = await axios.get<{ dataList: LayoutDTO }>(
+                `${import.meta.env.VITE_ENDPOINT}/user/${email}/widgets`
               )
-              console.log(`불러오기: ${JSON.stringify(data.data)}`)
-              setlayout(fromDTO(data.data))
+              console.log(data)
+              console.log(`불러오기: ${JSON.stringify(data.dataList)}`)
+              setlayout(fromDTO(data.dataList))
             } catch (e) {
               console.log(e)
             }
