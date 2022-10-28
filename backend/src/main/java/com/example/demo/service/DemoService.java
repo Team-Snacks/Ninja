@@ -71,8 +71,16 @@ public class DemoService {
 
         for (UserWidgetDto userWidgetDto : userWidgetDtos) {
             Widget findExistWidget = widgetRepository.findByName(userWidgetDto.getName());
-            if (findExistWidget == null)
-                System.out.println(responseService.errorResponse(400, "widget not found").log);
+
+            if (findExistWidget == null) {
+                Widget widget = new Widget();
+                if (userWidgetDto.getName() == null)
+                    return responseService.errorResponse(400, "widget nane null");
+                widget.setName(userWidgetDto.getName());
+                widgetRepository.save(widget);
+            }
+            findExistWidget = widgetRepository.findByName(userWidgetDto.getName());
+
             UserWidgetId userWidgetId= new UserWidgetId(findExistUser.getId(), findExistWidget.getId());
             UserWidget userWidget = new UserWidget(userWidgetId);
             userWidget.setX(userWidgetDto.getX());
@@ -115,11 +123,12 @@ public class DemoService {
 
 
     public CommonResponse postWidget(WidgetDto[] widgetDtos) {
-        for (WidgetDto widgetDto1 : widgetDtos) {
+        for (WidgetDto widgetDto : widgetDtos) {
+            //위젯 중복 체크하기
             Widget widget = new Widget();
-            if (widgetDto1.getName() == null)
-                return responseService.errorResponse(400, "null");
-            widget.setName(widgetDto1.getName());
+            if (widgetDto.getName() == null)
+                return responseService.errorResponse(400, "widget nane null");
+            widget.setName(widgetDto.getName());
             widgetRepository.save(widget);
         }
         return responseService.getCommonResponse();
