@@ -125,37 +125,4 @@ public class DemoService {
         return responseService.getCommonResponse();
     }
 
-/*
-    public List<UserWidgetDto> getUserWidget(String email) {
-        List<UserWidgetDto> list = new ArrayList<>();
-        User findExistUser = userRepository.findByName(email);
-        if (findExistUser == null) {
-            return null;
-        }
-        //System.out.println(responseService.errorResponse(400, "User not found").log);
-
-        UserWidget[] userWidgetEntities = userWidgetRepository.findWidgets(findExistUser.getId());
-        if (userWidgetEntities == null)
-            return null;
-            //System.out.println(responseService.errorResponse(400, "User widget not found").log);
-        Vector<UserWidgetDto> vec = new Vector<>();
-        for (UserWidget entity : userWidgetEntities) {
-            UserWidgetDto userWidgetDto = new UserWidgetDto();
-            Widget widgetEntity = widgetRepository.findByWidgetId(entity.getWidgetId());
-            if (widgetEntity == null)
-                return null;
-            userWidgetDto.setName(widgetEntity.getName());
-            userWidgetDto.setX(entity.getX());
-            userWidgetDto.setY(entity.getY());
-            userWidgetDto.setW(entity.getW());
-            userWidgetDto.setH(entity.getH());
-            vec.add(userWidgetDto);
-        }
-        UserWidgetDto[] widgetDtos = new UserWidgetDto[vec.size()];
-        for (int i = 0; i < vec.size(); i++) {
-            widgetDtos[i] = vec.get(i);
-            list.add(widgetDtos[i]);
-        }
-        return list;
-    } */
 }

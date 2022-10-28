@@ -56,9 +56,6 @@ public class DemoController {
     @PatchMapping("/{email}/widgets")
     public CommonResponse patchUserWidget(@PathVariable() String email, @RequestBody() UserWidgetDto[] userWidgetDtos) {
 
-      //if (check == false)
-       //   return (responseService.errorResponse(400, "email이 유효하지 않습니다"));
-
         return (demoService.patchUserWidget(email, userWidgetDtos));
     }
 
