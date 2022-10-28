@@ -70,9 +70,19 @@ public class DemoService {
             System.out.println(responseService.errorResponse(400, "User not found").log);
 
         for (UserWidgetDto userWidgetDto : userWidgetDtos) {
+            if (userWidgetDto.getName() == null)
+                return responseService.errorResponse(400, "widget name null");
+
             Widget findExistWidget = widgetRepository.findByName(userWidgetDto.getName());
-            if (findExistWidget == null)
-                System.out.println(responseService.errorResponse(400, "widget not found").log);
+
+            if (findExistWidget == null) {
+                Widget widget = new Widget();
+                widget.setName(userWidgetDto.getName());
+                widgetRepository.save(widget);
+
+                findExistWidget = widgetRepository.findByName(userWidgetDto.getName());
+            }
+
             UserWidgetId userWidgetId= new UserWidgetId(findExistUser.getId(), findExistWidget.getId());
             UserWidget userWidget = new UserWidget(userWidgetId);
             userWidget.setX(userWidgetDto.getX());
@@ -115,11 +125,11 @@ public class DemoService {
 
 
     public CommonResponse postWidget(WidgetDto[] widgetDtos) {
-        for (WidgetDto widgetDto1 : widgetDtos) {
+        for (WidgetDto widgetDto : widgetDtos) {
             Widget widget = new Widget();
-            if (widgetDto1.getName() == null)
-                return responseService.errorResponse(400, "null");
-            widget.setName(widgetDto1.getName());
+            if (widgetDto.getName() == null)
+                return responseService.errorResponse(400, "widget name null");
+            widget.setName(widgetDto.getName());
             widgetRepository.save(widget);
         }
         return responseService.getCommonResponse();
