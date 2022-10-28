@@ -13,6 +13,7 @@ import {
   toDTO,
 } from './atom'
 import { Login, Register } from './Login'
+import Market from './Market'
 import { paths } from './paths'
 import { WidgetGrid } from './WidgetGrid'
 
@@ -68,6 +69,7 @@ export const Home = () => {
         </Button>
       </Group>
       <WidgetGrid />
+      <Market />
     </>
   )
 }
