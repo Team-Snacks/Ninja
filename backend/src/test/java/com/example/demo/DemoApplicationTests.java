@@ -5,7 +5,10 @@ import com.example.demo.dto.UserWidgetDto;
 import com.example.demo.dto.WidgetDto;
 import com.example.demo.entity.Widget;
 import com.example.demo.repository.WidgetRepository;
-import com.example.demo.service.DemoService;
+import com.example.demo.response.CommonResponse;
+import com.example.demo.response.ListResponse;
+import com.example.demo.service.MarketService;
+import com.example.demo.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,9 +17,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 class DemoApplicationTests {
 
     @Autowired
-    private DemoService demoService;
+    private UserService userService;
     @Autowired
     private WidgetRepository widgetRepository;
+
+    @Autowired
+    private MarketService marketService;
 
     @Test
     void 로그인테스트() {
@@ -26,7 +32,7 @@ class DemoApplicationTests {
         userDto.setPassword("1234");
 
         //when
-        System.out.println(demoService.login(userDto).log);
+        System.out.println(userService.login(userDto).log);
 
         //than
     }
@@ -40,7 +46,7 @@ class DemoApplicationTests {
 
         //when
 
-        System.out.println(demoService.signup(userDto).log);
+        System.out.println(userService.signup(userDto).log);
         //than
         로그인테스트();
     }
@@ -83,13 +89,13 @@ class DemoApplicationTests {
         userWidgetDtos[2] = 유저위젯정보생성("widget3", 3, 3, 3, 3);
 
 
-        demoService.patchUserWidget("krkr@gmail.com", userWidgetDtos);
+        userService.patchUserWidget("krkr@gmail.com", userWidgetDtos);
 
         userWidgetDtos[0] = 유저위젯정보생성("widget1", 999, 1, 1, 1);
         userWidgetDtos[1] = 유저위젯정보생성("widget2", 2, 2, 2, 2);
         userWidgetDtos[2] = 유저위젯정보생성("widget3", 3, 3, 3, 3);
 
-        demoService.patchUserWidget("krkr@gmail.com", userWidgetDtos);
+        userService.patchUserWidget("krkr@gmail.com", userWidgetDtos);
         //when
 
         //than
@@ -99,7 +105,7 @@ class DemoApplicationTests {
     void 유저위젯받아오기테스트() {
         유저위젯패치테스트();
 
-        UserWidgetDto[] userWidgetDtos = demoService.getUserWidget("krkr@gmail.com").dataList;
+        UserWidgetDto[] userWidgetDtos = userService.getUserWidget("krkr@gmail.com").dataList;
         for (UserWidgetDto x: userWidgetDtos) {
             System.out.println(x.getName() + " " + x.getX());
         }
@@ -112,12 +118,34 @@ class DemoApplicationTests {
         wigetTest[0] = 위젯정보생성("test1");
         wigetTest[1] = 위젯정보생성("test2");
         wigetTest[2] = 위젯정보생성("test3");
-        demoService.postWidget(wigetTest);
+        userService.postWidget(wigetTest);
     }
 
     WidgetDto 위젯정보생성(String name) {
         WidgetDto widgetDto = new WidgetDto();
         widgetDto.setName(name);
         return widgetDto;
+    }
+
+    @Test
+    void 마켓위젯데이터추가(){
+        CommonResponse cm = marketService.addMarketWidget(위젯정보생성("widget1"));
+        System.out.println("마켓위젯데이터추가" + cm.log);
+    }
+
+    void 마켓위젯데이터추가(String widgetName){
+        CommonResponse cm = marketService.addMarketWidget(위젯정보생성(widgetName));
+        System.out.println("마켓위젯데이터추가" + widgetName + " " + cm.log);
+    }
+    @Test
+    void 마켓의위젯목록조회(){
+        마켓위젯데이터추가("widget1");
+        마켓위젯데이터추가("widget2");
+        마켓위젯데이터추가("widget3");
+        ListResponse<WidgetDto[]> cm = marketService.getMarketWidget();
+        System.out.println(cm.log);
+        for (WidgetDto widgetDto: cm.dataList) {
+            System.out.println(widgetDto.getName());
+        }
     }
 }
