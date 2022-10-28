@@ -13,8 +13,10 @@ function Market() {
   const [marketList, setMarketList] = useState<Widget[]>([])
   const getWidgets = async () => {
     try {
-      const data = await axios.get(`${import.meta.env.VITE_ENDPOINT}/market`)
-      setMarketList(data.data)
+      const { data } = await axios.get<{ dataList: Widget[] }>(
+        `${import.meta.env.VITE_ENDPOINT}/market`
+      )
+      setMarketList(data.dataList)
     } catch (e) {
       console.log(e)
     }
@@ -28,9 +30,10 @@ function Market() {
   const widgetRegist = async () => {
     const postWidget: Widget = { name: widgetName }
     try {
-      const data = await axios.post(`${import.meta.env.VITE_ENDPOINT}/market`, {
-        postWidget,
-      })
+      const data = await axios.post(
+        `${import.meta.env.VITE_ENDPOINT}/market`,
+        postWidget
+      )
       console.log(data)
     } catch (e) {
       console.log(e)
@@ -47,10 +50,8 @@ function Market() {
       w: 1,
       h: 1,
     })
-    console.log(layout)
     setLayout(layout)
   }
-
   return (
     <div>
       <div>마켓</div>
