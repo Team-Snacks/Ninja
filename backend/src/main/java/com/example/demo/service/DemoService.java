@@ -75,7 +75,7 @@ public class DemoService {
             if (findExistWidget == null) {
                 Widget widget = new Widget();
                 if (userWidgetDto.getName() == null)
-                    return responseService.errorResponse(400, "widget nane null");
+                    return responseService.errorResponse(400, "widget name null");
                 widget.setName(userWidgetDto.getName());
                 widgetRepository.save(widget);
             }
@@ -124,10 +124,9 @@ public class DemoService {
 
     public CommonResponse postWidget(WidgetDto[] widgetDtos) {
         for (WidgetDto widgetDto : widgetDtos) {
-            //위젯 중복 체크하기
             Widget widget = new Widget();
             if (widgetDto.getName() == null)
-                return responseService.errorResponse(400, "widget nane null");
+                return responseService.errorResponse(400, "widget name null");
             widget.setName(widgetDto.getName());
             widgetRepository.save(widget);
         }
